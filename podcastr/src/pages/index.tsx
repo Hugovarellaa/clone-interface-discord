@@ -1,4 +1,5 @@
 import { GetStaticProps } from "next";
+import Image from "next/image";
 import { api } from "../services/api";
 import { format, parseISO } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
@@ -28,16 +29,41 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
         <h2>Últimos lançamentos</h2>
 
         <ul>
-          {latesEpisodes.map(episode => {
+          {latesEpisodes.map((episode) => {
+            return (
+              <li key={episode.id}>
+                <Image
+                  width={192}
+                  height={192}
+                  src={episode.thumbnail}
+                  alt={episode.title}
+                  objectFit="cover"
+                />
+
+                <div className={styles.episodeDetails}>
+                  <a href="">{episode.title}</a>
+                  <p>{episode.members}</p>
+                  <span>{episode.publishedAt}</span>
+                  <span>{episode.durationAsString}</span>
+                </div>
+                <button type="button">
+                  <img src="/play-green.svg" alt="Tocar episodio" />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+      <section className={styles.allEpisodes}></section>
+      {/* <ul>
+          {allEpisodes.map(episode => {
             return (
               <li key={episode.id}>
                 <a href="">{episode.title}</a>
               </li>
             )
           })}
-        </ul>
-      </section>
-      <section className={styles.allEpisodes}></section>
+        </ul> */}
     </div>
   );
 }
@@ -69,8 +95,8 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   });
 
-  const latesEpisodes = episodes.slice(0 , 2)
-  const allEpisodes = episodes.slice(2, episodes.length)
+  const latesEpisodes = episodes.slice(0, 2);
+  const allEpisodes = episodes.slice(2, episodes.length);
 
   return {
     props: {
