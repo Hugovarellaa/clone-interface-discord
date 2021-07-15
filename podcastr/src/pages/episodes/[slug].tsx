@@ -3,7 +3,9 @@ import ptBR from "date-fns/locale/pt-BR";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { api } from "../../services/api";
 import { convertDurationToTimeString } from "../../utils/convertDurationToTimeString";
-
+import Image from "next/image";
+import Link from "next/link";
+import styles from "./episode.module.scss";
 interface Episode {
   id: string;
   title: string;
@@ -21,16 +23,48 @@ interface EpisodeProps {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
- 
-  return <h1>{episode.title}</h1>;
+  return (
+    <div className={styles.episode}>
+      <div className={styles.thumbnailContainer}>
+        <Link href='/'>
+          <button type="button">
+            <img src="/arrow-left.svg" alt="Voltar pagina" />
+          </button>
+          </Link>
+
+        <Image
+          width={700}
+          height={160}
+          src={episode.thumbnail}
+          alt={episode.title}
+          objectFit="cover"
+        />
+
+        <button type="button">
+          <img src="/play.svg" alt="Toca episode" />
+        </button>
+      </div>
+
+      <header>
+        <h1>{episode.title}</h1>
+        <span>{episode.members}</span>
+        <span>{episode.publishedAt}</span>
+        <span>{episode.durationAsString}</span>
+      </header>
+      <div
+        className={styles.description}
+        dangerouslySetInnerHTML={{ __html: episode.description }}
+      />
+    </div>
+  );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  return{
+  return {
     paths: [],
-    fallback: 'blocking'
-  }
-}
+    fallback: "blocking",
+  };
+};
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { slug } = ctx.params;
