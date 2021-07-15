@@ -1,24 +1,43 @@
 import { GetStaticProps } from "next";
 import { api } from "../services/api";
 import { format, parseISO } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR"
+import ptBR from "date-fns/locale/pt-BR";
 import { convertDurationToTimeString } from "../utils/convertDurationToTimeString";
 
+import styles from "./home.module.scss";
 interface Episode {
   id: string;
   title: string;
-  member: string;
-  published_at: string;
+  thumbnail: string;
+  description: string;
+  members: string;
+  duration: number;
+  durationAsString: number;
+  url: string;
+  publishedAt: string;
 }
 interface HomeProps {
-  episodes: Episode[];
+  latesEpisodes: Episode[];
+  allEpisodes: Episode[];
 }
 
-export default function Home(props: HomeProps) {
+export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
   return (
-    <div>
-      <h1>inter</h1>
-      <p>{JSON.stringify(props.episodes)}</p>
+    <div className={styles.homepage}>
+      <section className={styles.latesEpisodes}>
+        <h2>Últimos lançamentos</h2>
+
+        <ul>
+          {latesEpisodes.map(episode => {
+            return (
+              <li key={episode.id}>
+                <a href="">{episode.title}</a>
+              </li>
+            )
+          })}
+        </ul>
+      </section>
+      <section className={styles.allEpisodes}></section>
     </div>
   );
 }
@@ -32,24 +51,32 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
 
-  const episodes = data.map(episode => {
+  const episodes = data.map((episode) => {
     return {
       id: episode.id,
       title: episode.title,
       thumbnail: episode.thumbnail,
       members: episode.members,
-      publishedAt: format(parseISO(episode.published_at) , 'd MMM yy ' , {locale: ptBR}),
+      publishedAt: format(parseISO(episode.published_at), "d MMM yy ", {
+        locale: ptBR,
+      }),
       duration: Number(episode.file.duration),
-      durationAsString: convertDurationToTimeString(Number(episode.file.duration)),
+      durationAsString: convertDurationToTimeString(
+        Number(episode.file.duration)
+      ),
       description: episode.description,
       url: episode.file.url,
     };
   });
 
+  const latesEpisodes = episodes.slice(0 , 2)
+  const allEpisodes = episodes.slice(2, episodes.length)
+
   return {
     props: {
-      episodes,
+      latesEpisodes,
+      allEpisodes,
     },
     revalidate: 60 * 60 * 8,
-  }
-}
+  };
+};
