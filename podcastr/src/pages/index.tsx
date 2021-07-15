@@ -1,4 +1,5 @@
 import { GetStaticProps } from "next";
+import Link from "next/link";
 import Image from "next/image";
 import { api } from "../services/api";
 import { format, parseISO } from "date-fns";
@@ -10,7 +11,6 @@ interface Episode {
   id: string;
   title: string;
   thumbnail: string;
-  description: string;
   members: string;
   duration: number;
   durationAsString: number;
@@ -41,7 +41,11 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
                 />
 
                 <div className={styles.episodeDetails}>
-                  <a href="">{episode.title}</a>
+
+                  <Link href={`/episodes/${episode.title}`}>
+                  <a >{episode.title}</a>
+                  </Link>
+
                   <p>{episode.members}</p>
                   <span>{episode.publishedAt}</span>
                   <span>{episode.durationAsString}</span>
@@ -58,18 +62,20 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
         <h2>Todos episodios</h2>
         <table cellSpacing={0}>
           <thead>
-            <th></th>
-            <th>Podcast</th>
-            <th>Integrantes</th>
-            <th>Data</th>
-            <th>Duração</th>
-            <th></th>
+            <tr>
+              <th></th>
+              <th>Podcast</th>
+              <th>Integrantes</th>
+              <th>Data</th>
+              <th>Duração</th>
+              <th></th>
+            </tr>
           </thead>
           <tbody>
             {allEpisodes.map((episode) => {
               return (
                 <tr key={episode.id}>
-                  <td style={{width: 72}}>
+                  <td style={{ width: 72 }}>
                     <Image
                       width={120}
                       height={120}
@@ -79,10 +85,12 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
                     />
                   </td>
                   <td>
-                    <a href="">{episode.title}</a>
+                    <Link href={`/episodes/${episode.id} `}>
+                      <a>{episode.title}</a>
+                    </Link>
                   </td>
                   <td>{episode.members}</td>
-                  <td style={{width: 100}}>{episode.publishedAt}</td>
+                  <td style={{ width: 100 }}>{episode.publishedAt}</td>
                   <td>{episode.durationAsString}</td>
                   <td>
                     <button type="button">
@@ -114,14 +122,9 @@ export const getStaticProps: GetStaticProps = async () => {
       title: episode.title,
       thumbnail: episode.thumbnail,
       members: episode.members,
-      publishedAt: format(parseISO(episode.published_at), "d MMM yy ", {
-        locale: ptBR,
-      }),
+      publishedAt: format(parseISO(episode.published_at), "d MMM yy ", {locale: ptBR,}),
       duration: Number(episode.file.duration),
-      durationAsString: convertDurationToTimeString(
-        Number(episode.file.duration)
-      ),
-      description: episode.description,
+      durationAsString: convertDurationToTimeString(Number(episode.file.duration)),
       url: episode.file.url,
     };
   });
