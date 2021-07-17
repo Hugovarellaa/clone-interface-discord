@@ -42,8 +42,8 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
 
                 <div className={styles.episodeDetails}>
 
-                  <Link href={`/episodes/${episode.title}`}>
-                  <a >{episode.title}</a>
+                  <Link href={`/episodes/${episode.id}`}>
+                  <a>{episode.title}</a>
                   </Link>
 
                   <p>{episode.members}</p>
