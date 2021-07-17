@@ -5,10 +5,8 @@ import { api } from "../services/api";
 import { format, parseISO } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { convertDurationToTimeString } from "../utils/convertDurationToTimeString";
-
 import styles from "./home.module.scss";
-import { useContext } from "react";
-import { PlayerContext } from "../contexts/PlayerContext";
+import {  usePlayer } from "../contexts/PlayerContext";
 interface Episode {
   id: string;
   title: string;
@@ -25,7 +23,7 @@ interface HomeProps {
 }
 
 export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
-  const { playList } = useContext(PlayerContext);
+  const { playList } = usePlayer();
   
   const episodeList = [...latesEpisodes, ...allEpisodes];
 
