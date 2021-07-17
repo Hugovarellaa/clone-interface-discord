@@ -41,9 +41,8 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
                 />
 
                 <div className={styles.episodeDetails}>
-
                   <Link href={`/episodes/${episode.id}`}>
-                  <a>{episode.title}</a>
+                    <a>{episode.title}</a>
                   </Link>
 
                   <p>{episode.members}</p>
@@ -122,9 +121,13 @@ export const getStaticProps: GetStaticProps = async () => {
       title: episode.title,
       thumbnail: episode.thumbnail,
       members: episode.members,
-      publishedAt: format(parseISO(episode.published_at), "d MMM yy ", {locale: ptBR,}),
+      publishedAt: format(parseISO(episode.published_at), "d MMM yy ", {
+        locale: ptBR,
+      }),
       duration: Number(episode.file.duration),
-      durationAsString: convertDurationToTimeString(Number(episode.file.duration)),
+      durationAsString: convertDurationToTimeString(
+        Number(episode.file.duration)
+      ),
       url: episode.file.url,
     };
   });
