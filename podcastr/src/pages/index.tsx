@@ -53,7 +53,7 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
                   <span>{episode.publishedAt}</span>
                   <span>{episode.durationAsString}</span>
                 </div>
-                <button type="button" onClick={()=> play(episode)}>
+                <button type="button" onClick={() => play(episode)}>
                   <img src="/play-green.svg" alt="Tocar episodio" />
                 </button>
               </li>
