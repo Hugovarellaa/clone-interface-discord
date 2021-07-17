@@ -6,6 +6,7 @@ import { convertDurationToTimeString } from "../../utils/convertDurationToTimeSt
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./episode.module.scss";
+
 interface Episode {
   id: string;
   title: string;
@@ -23,14 +24,15 @@ interface EpisodeProps {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
+  
   return (
     <div className={styles.episode}>
       <div className={styles.thumbnailContainer}>
-        <Link href='/'>
+        <Link href="/">
           <button type="button">
             <img src="/arrow-left.svg" alt="Voltar pagina" />
           </button>
-          </Link>
+        </Link>
 
         <Image
           width={700}
@@ -62,7 +64,7 @@ export default function Episode({ episode }: EpisodeProps) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
-    fallback: "blocking",
+    fallback: 'blocking',
   };
 };
 
