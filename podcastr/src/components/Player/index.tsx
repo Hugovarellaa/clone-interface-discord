@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePlayer } from "../../contexts/PlayerContext";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import Slider from 'rc-slider';
+import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { convertDurationToTimeString } from "../../utils/convertDurationToTimeString";
 
@@ -95,9 +95,7 @@ export function Player() {
               handleStyle={{ borderColor: "#04d361", borderWidth: 4 }}
               max={episode.duration}
               value={progress}
-             
               onChange={handleSeek}
-              
             />
           ) : (
             <div className={styles.slider}>
