@@ -24,6 +24,7 @@ export function Player() {
     toggleLoop,
     toggleShuffle,
     isShuffling,
+    ClearPlayerState,
   } = usePlayer();
 
   useEffect(() => {
@@ -37,19 +38,26 @@ export function Player() {
     }
   }, [isPlaying]);
 
-  function setupProgressListener(){
-    audioRef.current.currentTime = 0
+  function setupProgressListener() {
+    audioRef.current.currentTime = 0;
 
-    audioRef.current.addEventListener('timeupdate' , ()=>{
-      setProgress(Math.floor(audioRef.current.currentTime))
-    })
+    audioRef.current.addEventListener("timeupdate", () => {
+      setProgress(Math.floor(audioRef.current.currentTime));
+    });
   }
 
-  function handleSeek(amount: number){
-    audioRef.current.currentTime = amount
-    setProgress(amount)
+  function handleSeek(amount: number) {
+    audioRef.current.currentTime = amount;
+    setProgress(amount);
   }
 
+  function handleEpisodeEnded() {
+    if (hasNext) {
+      playNext();
+    } else {
+      ClearPlayerState();
+    }
+  }
   const episode = episodeList[currentEpisodeIndex];
 
   return (
@@ -79,7 +87,7 @@ export function Player() {
 
       <footer className={!episode ? styles.empty : ``}>
         <div className={styles.progress}>
-        <span>{convertDurationToTimeString(progress)}</span>
+          <span>{convertDurationToTimeString(progress)}</span>
           {episode ? (
             <Slider
               trackStyle={{ backgroundColor: "#04d361" }}
@@ -87,7 +95,9 @@ export function Player() {
               handleStyle={{ borderColor: "#04d361", borderWidth: 4 }}
               max={episode.duration}
               value={progress}
+              onEnded={handleEpisodeEnded}
               onChange={handleSeek}
+              
             />
           ) : (
             <div className={styles.slider}>
