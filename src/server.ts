@@ -5,6 +5,7 @@ const app = express();
 app.get("/", (req, res) => {
   return res.json({ message: "Rota get ok" });
 });
+
 app.post("/", (req, res) => {
   return res.json({ message: "Rota post ok" });
 });
