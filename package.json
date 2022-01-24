@@ -1,0 +1,19 @@
+{
+  "name": "Chatty",
+  "version": "1.0.0",
+  "main": "./src/server.ts",
+  "repository": "https://github.com/Hugovarellaa/Chatty.git",
+  "author": "Hugo <hugovarellaa@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules ."
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "ts-node-dev": "^1.1.8"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "typescript": "^4.5.5"
+  }
+}
