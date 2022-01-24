@@ -1,10 +1,13 @@
 import { Router } from "express";
 import { SettingsController } from "./controller/SettingsController";
+import { UsersController } from "./controller/UsersController";
 
 const routes = Router();
 
-const settingsRepository = new SettingsController();
+const settingsController = new SettingsController();
+const userController = new UsersController();
 
-routes.post("/settings", settingsRepository.create);
+routes.post("/settings", settingsController.create);
+routes.post("/users", userController.create);
 
 export { routes };

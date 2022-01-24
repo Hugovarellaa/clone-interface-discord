@@ -1,12 +1,8 @@
 import { getCustomRepository } from "typeorm";
 import { UserRepository } from "../repositories/UserRepository";
 
-interface IUserCreate {
-  email: string;
-}
-
 class UsersServices {
-  async create({ email }: IUserCreate) {
+  async create(email: string) {
     const usersRepository = getCustomRepository(UserRepository);
 
     // verfica se o usuario existir
@@ -24,6 +20,7 @@ class UsersServices {
       email,
     });
     await usersRepository.save(user);
+    return user;
   }
 }
 
