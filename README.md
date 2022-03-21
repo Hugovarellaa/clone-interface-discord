@@ -3,7 +3,7 @@
 &nbsp;
 
 <div>
-  <img src="./public/discord.svg">
+  <img src="./clone-discord/public/discord.svg">
 </div>
 
 <br/>
