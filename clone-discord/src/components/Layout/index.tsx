@@ -1,3 +1,4 @@
+import { ChannelData } from "../ChannelData";
 import { ChannelInfor } from "../ChannelInfor";
 import { ChannelList } from "../ChannelList";
 import ServerList from "../ServerList";
@@ -15,7 +16,7 @@ export const Layout: React.FC = () => {
         <ChannelInfor />
         <ChannelList />
         <UserInfor />
-        <div />
+        <ChannelData />
         <UserList />
       </Container>
     </>
