@@ -1,3 +1,4 @@
+import { ChannelInfor } from "../ChannelInfor";
 import ServerList from "../ServerList";
 import { ServerName } from "../ServerName";
 import { Container } from "./styles";
@@ -8,6 +9,7 @@ export const Layout: React.FC = () => {
       <Container>
         <ServerList />
         <ServerName />
+        <ChannelInfor />
       </Container>
     </>
   );
